@@ -11,6 +11,8 @@ from tensorflow.keras.preprocessing import image
 import random
 import io
 import base64
+import gdown
+import requests
 
 # ------------------------- Page Configuration -------------------------
 st.set_page_config(
@@ -427,9 +429,31 @@ except Exception as e:
 
 # ------------------------- Constants -------------------------
 CLASS_MAPPING = {0: 'Benign', 1: 'Malignant', 2: 'Normal'}
-MODEL_PATH = 'Diasease_model.h5'
+
+# Model paths in models folder
+MODEL_PATH = os.path.join('models', 'Diasease_model.h5')
+BREAST_CANCER_MODEL_PATH = os.path.join('models', 'temp_model.h5')
+DIABETES_MODEL_PATH = os.path.join('models', 'diabetes_model.pkl')
+HEART_DISEASE_MODEL_PATH = os.path.join('models', 'heart_model.pkl')
+
+# Google Drive URLs for models
+BREAST_CANCER_MODEL_URL = "https://drive.google.com/file/d/1oUCacUPYAemX0zCJbRpVXutSjFtgac4K/view?usp=drive_link"
+DISEASE_MODEL_URL = "https://drive.google.com/file/d/1h3RYnCvYNeE0HltyzVisU67DuTvaAdVf/view?usp=drive_link"
+
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs('models', exist_ok=True)
+
+def download_model_from_gdrive(url, output_path):
+    """Download a model file from Google Drive."""
+    try:
+        file_id = url.split('/')[-2]
+        download_url = f'https://drive.google.com/uc?id={file_id}'
+        gdown.download(download_url, output_path, quiet=False)
+        return os.path.exists(output_path)
+    except Exception as e:
+        st.error(f"Error downloading model: {str(e)}")
+        return False
 
 # Load intents from JSON file
 def load_intents():
@@ -474,12 +498,21 @@ DEFAULT_INTENTS = {
 @st.cache_resource
 def load_breast_cancer_model():
     try:
-        temp_model_path = "temp_model.h5"
-        if os.path.exists(temp_model_path):
-            model = tf.keras.models.load_model(temp_model_path, compile=False)
+        # First try to load from local models folder
+        if os.path.exists(BREAST_CANCER_MODEL_PATH):
+            model = tf.keras.models.load_model(BREAST_CANCER_MODEL_PATH, compile=False)
             return model
-        st.warning("Warning: temp_model.h5 not found. Please provide the model file locally.")
-        return None
+        
+        # If not found locally, download from Google Drive
+        st.info("Downloading breast cancer model from Google Drive...")
+        if download_model_from_gdrive(BREAST_CANCER_MODEL_URL, BREAST_CANCER_MODEL_PATH):
+            model = tf.keras.models.load_model(BREAST_CANCER_MODEL_PATH, compile=False)
+            st.success("Breast cancer model downloaded and loaded successfully!")
+            return model
+        else:
+            st.error("Failed to download breast cancer model.")
+            return None
+            
     except Exception as e:
         st.error(f"Error loading breast cancer model: {str(e)}")
         return None
@@ -498,6 +531,13 @@ def predict_breast_cancer(image_data, model):
 
 def predict_skin_disease(image_data):
     try:
+        # First try to load from local models folder
+        if not os.path.exists(MODEL_PATH):
+            st.info("Downloading disease model from Google Drive...")
+            if not download_model_from_gdrive(DISEASE_MODEL_URL, MODEL_PATH):
+                st.error("Failed to download disease model.")
+                return None, None
+        
         model = load_model(MODEL_PATH, compile=False)
         optimizer = tfa.optimizers.AdamW(weight_decay=1e-4)
         model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
@@ -517,11 +557,10 @@ def predict_skin_disease(image_data):
 
 def predict_diabetes(features):
     try:
-        model_path = 'diabetes_model.pkl'
-        if not os.path.exists(model_path):
-            st.error(f"Model file {model_path} not found. Please upload the model.")
+        if not os.path.exists(DIABETES_MODEL_PATH):
+            st.error(f"Model file {DIABETES_MODEL_PATH} not found. Please upload the model to the models folder.")
             return None
-        with open(model_path, 'rb') as file:
+        with open(DIABETES_MODEL_PATH, 'rb') as file:
             model = pickle.load(file)
         prediction = model.predict([features])[0]
         return (
@@ -535,11 +574,10 @@ def predict_diabetes(features):
 
 def predict_heart_disease(features):
     try:
-        model_path = 'heart_model.pkl'
-        if not os.path.exists(model_path):
-            st.error(f"Model file {model_path} not found. Please upload the model.")
+        if not os.path.exists(HEART_DISEASE_MODEL_PATH):
+            st.error(f"Model file {HEART_DISEASE_MODEL_PATH} not found. Please upload the model to the models folder.")
             return None
-        with open(model_path, 'rb') as file:
+        with open(HEART_DISEASE_MODEL_PATH, 'rb') as file:
             model = pickle.load(file)
         prediction = model.predict([features])[0]
         return (
