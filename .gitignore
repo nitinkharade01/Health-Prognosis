@@ -1,10 +1,77 @@
-# Byte-compiled / optimized / DLL files
+# Python
 __pycache__/
 *.py[cod]
-*$py.class
-
-# C extensions
 *.so
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+bin/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.env
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.project
+.pydevproject
+.settings/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# Logs and databases
+*.log
+*.sqlite
+*.db
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Large files and model files
+*.h5
+*.pkl
+*.joblib
+*.ckpt
+*.pb
+*.tflite
+*.onnx
+*.pt
+*.pth
+*.sav
+*.npz
+*.npy
+
+# Uploads and temp files
+uploads/
+temp_model.h5
+
+# Specific large model files
+models/Diasease_model.h5
+models/temp_model.h5
 
 # Distribution / packaging
 .Python
@@ -63,9 +130,6 @@ docs/_build/
 # PyBuilder
 .target/
 
-# Jupyter Notebook
-.ipynb_checkpoints
-
 # IPython
 profile_default/
 ipython_config.py
@@ -77,11 +141,7 @@ ipython_config.py
 celerybeat-schedule
 
 # dotenv
-.env
 .env.*
-
-# virtualenv
-.venv/
 
 # Spyder project settings
 .spyderproject
@@ -129,4 +189,12 @@ Thumbs.db
 *.log
 
 # Other
-*.swp 
+*.swp
+
+# --- Model files should be tracked and placed in the 'models' folder ---
+!models/
+!models/*
+# Remove any previous rules that ignore model files or the models folder 
+
+BREAST_CANCER_MODEL_URL = "https://drive.google.com/file/d/1oUCacUPYAemX0zCJbRpVXutSjFtgac4K/view?usp=drive_link"
+DISEASE_MODEL_URL = "https://drive.google.com/file/d/1h3RYnCvYNeE0HltyzVisU67DuTvaAdVf/view?usp=drive_link" 
