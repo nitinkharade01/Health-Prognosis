@@ -89,3 +89,61 @@ footer {
     color: white;
     border-radius: 10px;
 }
+
+/* File uploader main area */
+section[data-testid="stFileUploader"] {
+    background: #181818 !important;
+    border-radius: 10px !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+/* File uploader drop zone: move button to left, dark background, no white */
+section[data-testid="stFileUploader"] div[data-testid="stFileDropzone"] {
+    background: #181818 !important;
+    border: 2px dashed #222 !important;
+    border-radius: 10px !important;
+    color: #eeeeee !important;
+    display: flex !important;
+    flex-direction: row-reverse !important; /* Moves Browse button to left */
+    align-items: center !important;
+    min-height: 60px !important;
+}
+
+/* File uploader button: black, left, no white */
+section[data-testid="stFileUploader"] button {
+    background: #181818 !important;
+    color: #fff !important;
+    border: 1.5px solid #333 !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+    margin-right: 16px !important;
+    margin-left: 0 !important;
+    transition: background 0.2s, border 0.2s;
+}
+section[data-testid="stFileUploader"] button:hover {
+    background: #222 !important;
+    border-color: #ff4d4d !important;
+    color: #fff !important;
+}
+
+/* Remove white from all children */
+section[data-testid="stFileUploader"] * {
+    background: transparent !important;
+    color: #eeeeee !important;
+    border: none !important;
+}
+
+/* Remove white background from drag icon and text */
+section[data-testid="stFileUploader"] svg,
+section[data-testid="stFileUploader"] p {
+    color: #eeeeee !important;
+    fill: #eeeeee !important;
+}
+
+/* Remove white background from file info text */
+section[data-testid="stFileUploader"] span,
+section[data-testid="stFileUploader"] label {
+    color: #aaaaaa !important;
+}
