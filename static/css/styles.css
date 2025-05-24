@@ -1,0 +1,149 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Body */
+body {
+    background-color: #f0f8ff;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    text-align: center;
+    background-color: #006666;
+    color: white;
+    padding: 40px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+header h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+/* Section Titles */
+section h2 {
+    margin: 40px 0 20px;
+    font-size: 2em;
+    color: #004d4d;
+    text-align: center;
+}
+
+/* Vertical Options */
+.vertical-options .option {
+    background-color: #e0ffff;
+    padding: 20px;
+    margin: 10px auto;
+    width: 80%;
+    border-left: 5px solid #006666;
+    transition: transform 0.3s, background-color 0.3s;
+    border-radius: 8px;
+}
+
+.vertical-options .option:hover {
+    transform: translateY(-5px);
+    background-color: #d0f0f0;
+}
+
+/* Horizontal Options */
+.horizontal-options {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.horizontal-options .horizontal-option {
+    display: inline-block;
+    margin: 10px;
+}
+
+.horizontal-options button {
+    padding: 10px 20px;
+    background-color: #00cccc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.horizontal-options button:hover {
+    background-color: #009999;
+    transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 60px;
+    padding: 20px;
+    background-color: #004d4d;
+    color: white;
+    border-radius: 10px;
+}
+
+/* File uploader main area */
+section[data-testid="stFileUploader"] {
+    background: #181818 !important;
+    border-radius: 10px !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+/* File uploader drop zone: move button to left, dark background, no white */
+section[data-testid="stFileUploader"] div[data-testid="stFileDropzone"] {
+    background: #181818 !important;
+    border: 2px dashed #222 !important;
+    border-radius: 10px !important;
+    color: #eeeeee !important;
+    display: flex !important;
+    flex-direction: row-reverse !important; /* Moves Browse button to left */
+    align-items: center !important;
+    min-height: 60px !important;
+}
+
+/* File uploader button: black, left, no white */
+section[data-testid="stFileUploader"] button {
+    background: #181818 !important;
+    color: #fff !important;
+    border: 1.5px solid #333 !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+    margin-right: 16px !important;
+    margin-left: 0 !important;
+    transition: background 0.2s, border 0.2s;
+}
+section[data-testid="stFileUploader"] button:hover {
+    background: #222 !important;
+    border-color: #ff4d4d !important;
+    color: #fff !important;
+}
+
+/* Remove white from all children */
+section[data-testid="stFileUploader"] * {
+    background: transparent !important;
+    color: #eeeeee !important;
+    border: none !important;
+}
+
+/* Remove white background from drag icon and text */
+section[data-testid="stFileUploader"] svg,
+section[data-testid="stFileUploader"] p {
+    color: #eeeeee !important;
+    fill: #eeeeee !important;
+}
+
+/* Remove white background from file info text */
+section[data-testid="stFileUploader"] span,
+section[data-testid="stFileUploader"] label {
+    color: #aaaaaa !important;
+}
