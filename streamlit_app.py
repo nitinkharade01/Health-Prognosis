@@ -417,20 +417,18 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Load configuration
+# Load configuration
 try:
     with open("config.json", encoding="utf-8") as config_file:
         config_params = json.load(config_file)['params']
 except Exception as e:
     st.error(f"Error loading config: {str(e)}")
-    config_params = {
-# <<<<<<< HEAD
-        "app_name": st.secrets["app_config"]["app_name"],
-        "description": st.secrets["app_config"]["description"]
-# =======
+    config = {
+        "title": st.secrets["app_config"]["title"],
         "app_name": "Health Prediction App",
         "description": "Get personalized predictions for various health conditions using advanced machine learning models."
-# >>>>>>> b63058c4fa6ed5033f5e71df049712721559b884
     }
+
 
 # ------------------------- Constants -------------------------
 CLASS_MAPPING = {0: 'Benign', 1: 'Malignant', 2: 'Normal'}
@@ -442,13 +440,14 @@ DIABETES_MODEL_PATH = os.path.join('models', 'diabetes_model.pkl')
 HEART_DISEASE_MODEL_PATH = os.path.join('models', 'heart_model.pkl')
 
 # Google Drive URLs for models
-# <<<<<<< HEAD
+# Google Drive URLs for models
 BREAST_CANCER_MODEL_URL = st.secrets["model_urls"]["breast_cancer_model"]
 DISEASE_MODEL_URL = st.secrets["model_urls"]["disease_model"]
-# =======
+
+# Google Drive URLs for models
 BREAST_CANCER_MODEL_URL = "https://drive.google.com/file/d/1oUCacUPYAemX0zCJbRpVXutSjFtgac4K/view?usp=drive_link"
 DISEASE_MODEL_URL = "https://drive.google.com/file/d/1h3RYnCvYNeE0HltyzVisU67DuTvaAdVf/view?usp=drive_link"
-# >>>>>>> b63058c4fa6ed5033f5e71df049712721559b884
+
 
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
