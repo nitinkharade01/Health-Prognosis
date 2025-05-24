@@ -1,82 +1,9 @@
 # Python
 __pycache__/
 *.py[cod]
+*$py.class
 *.so
 .Python
-*.egg
-*.egg-info/
-dist/
-build/
-eggs/
-parts/
-bin/
-var/
-sdist/
-develop-eggs/
-.installed.cfg
-lib/
-lib64/
-
-# Virtual Environment
-venv/
-env/
-ENV/
-.env
-.venv/
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-.project
-.pydevproject
-.settings/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-*/.ipynb_checkpoints/*
-
-# Logs and databases
-*.log
-*.sqlite
-*.db
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Large files and model files
-*.h5
-*.pkl
-*.joblib
-*.ckpt
-*.pb
-*.tflite
-*.onnx
-*.pt
-*.pth
-*.sav
-*.npz
-*.npy
-
-# Uploads and temp files
-uploads/
-temp_model.h5
-
-# Specific large model files
-models/Diasease_model.h5
-models/temp_model.h5
-
-# Distribution / packaging
-.Python
-env/
-venv/
 build/
 develop-eggs/
 dist/
@@ -88,113 +15,50 @@ lib64/
 parts/
 sdist/
 var/
+wheels/
 *.egg-info/
 .installed.cfg
 *.egg
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
+# Virtual Environment
+venv/
+ENV/
+env/
+.env
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-.pytest_cache/
-
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
-*.log
-local_settings.py
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-.target/
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-.python-version
-
-# celery beat schedule file
-celerybeat-schedule
-
-# dotenv
-.env.*
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-
-# Pyre type checker
-.pyre/
-
-# VS Code
+# IDE
+.idea/
 .vscode/
+*.swp
+*.swo
 
-# Model and data files
-*.h5
-*.pkl
-*.joblib
-*.ckpt
-*.pb
-*.tflite
-*.onnx
-*.pt
-*.pth
-*.sav
-*.npz
-*.npy
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
 
-# Uploads and temp files
+# Model files and data
+models/*.h5
+models/*.pkl
 uploads/
-temp_model.h5
+datasets/
 
-# OS files
+# Logs
+*.log
+
+# OS
 .DS_Store
 Thumbs.db
 
-# Log files
-*.log
+# Streamlit
+.streamlit/
 
-# Other
+# Temporary files
+*.tmp
+*.bak
 *.swp
+*~
 
-# --- Model files should be tracked and placed in the 'models' folder ---
-!models/
-!models/*
-# Remove any previous rules that ignore model files or the models folder 
-
-BREAST_CANCER_MODEL_URL = "https://drive.google.com/file/d/1oUCacUPYAemX0zCJbRpVXutSjFtgac4K/view?usp=drive_link"
-DISEASE_MODEL_URL = "https://drive.google.com/file/d/1h3RYnCvYNeE0HltyzVisU67DuTvaAdVf/view?usp=drive_link" 
+# Project specific
+splitted_model/
+LossVal_loss.png
+get-pip.py
