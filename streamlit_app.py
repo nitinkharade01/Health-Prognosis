@@ -423,8 +423,13 @@ try:
 except Exception as e:
     st.error(f"Error loading config: {str(e)}")
     config_params = {
+<<<<<<< HEAD
         "app_name": st.secrets["app_config"]["app_name"],
         "description": st.secrets["app_config"]["description"]
+=======
+        "app_name": "Health Prediction App",
+        "description": "Get personalized predictions for various health conditions using advanced machine learning models."
+>>>>>>> b63058c4fa6ed5033f5e71df049712721559b884
     }
 
 # ------------------------- Constants -------------------------
@@ -437,8 +442,13 @@ DIABETES_MODEL_PATH = os.path.join('models', 'diabetes_model.pkl')
 HEART_DISEASE_MODEL_PATH = os.path.join('models', 'heart_model.pkl')
 
 # Google Drive URLs for models
+<<<<<<< HEAD
 BREAST_CANCER_MODEL_URL = st.secrets["model_urls"]["breast_cancer_model"]
 DISEASE_MODEL_URL = st.secrets["model_urls"]["disease_model"]
+=======
+BREAST_CANCER_MODEL_URL = "https://drive.google.com/file/d/1oUCacUPYAemX0zCJbRpVXutSjFtgac4K/view?usp=drive_link"
+DISEASE_MODEL_URL = "https://drive.google.com/file/d/1h3RYnCvYNeE0HltyzVisU67DuTvaAdVf/view?usp=drive_link"
+>>>>>>> b63058c4fa6ed5033f5e71df049712721559b884
 
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)

@@ -22,21 +22,30 @@ wheels/
 
 # Virtual Environment
 venv/
+<<<<<<< HEAD
 env/
 ENV/
 .env
 .venv
 env.bak/
 venv.bak/
+=======
+ENV/
+env/
+.env
+>>>>>>> b63058c4fa6ed5033f5e71df049712721559b884
 
 # IDE
 .idea/
 .vscode/
 *.swp
 *.swo
+<<<<<<< HEAD
 .project
 .pydevproject
 .settings/
+=======
+>>>>>>> b63058c4fa6ed5033f5e71df049712721559b884
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -50,6 +59,7 @@ datasets/
 
 # Logs
 *.log
+<<<<<<< HEAD
 logs/
 log/
 
@@ -62,20 +72,35 @@ log/
 ehthumbs.db
 Thumbs.db
 
+=======
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Streamlit
+.streamlit/
+
+>>>>>>> b63058c4fa6ed5033f5e71df049712721559b884
 # Temporary files
 *.tmp
 *.bak
 *.swp
+<<<<<<< HEAD
 *~.nib
 local.properties
 .settings/
 .loadpath
 .recommenders
+=======
+*~
+>>>>>>> b63058c4fa6ed5033f5e71df049712721559b884
 
 # Project specific
 splitted_model/
 LossVal_loss.png
 get-pip.py
+<<<<<<< HEAD
 
 # Streamlit
 .streamlit/secrets.toml
@@ -86,3 +111,5 @@ secure_users.db
 users.db
 users.xlsx
 users_export.xlsx
+=======
+>>>>>>> b63058c4fa6ed5033f5e71df049712721559b884
