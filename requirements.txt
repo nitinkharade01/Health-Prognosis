@@ -8,3 +8,5 @@ scikit-learn==1.4.0
 pandas==2.2.0
 nltk==3.8.1
 requests==2.31.0
+protobuf==3.20.3
+h5py==3.10.0
