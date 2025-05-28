@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ config.app_name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: #eeeeee;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+
+        .form-control, .form-select {
+            background-color: #222222;
+            color: #ffffff;
+            border: 1px solid #444;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background-color: #2a2a2a;
+            color: #ffffff;
+            border-color: #666;
+            box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary {
+            background-color: #000000;
+            border: 1px solid #000000;
+            color: #ffffff;
+            font-weight: 700;
+            padding: 10px 20px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #111111;
+            border-color: #111111;
+        }
+
+        .chat-container {
+            height: 150px;
+            overflow-y: auto;
+            padding: 12px;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .user-message {
+            background-color: #2a2a2a;
+            margin-left: 20%;
+        }
+
+        .bot-message {
+            background-color: #333;
+            margin-right: 20%;
+        }
+
+        .prediction-result {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .success {
+            background-color: #1e3a1e;
+        }
+
+        .error {
+            background-color: #3a1e1e;
+        }
+
+        .file-upload {
+            background-color: #222222;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px dashed #444;
+        }
+
+        .file-upload:hover {
+            border-color: #666;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+
+        .chatbox-wrapper {
+            width: 100%;
+            margin-left: 0;
+            max-width: none;
+        }
+
+        .input-group {
+            width: 100%;
+        }
+
+        .input-group .form-control {
+            flex: 1 1 auto;
+            width: 1%;
+            min-width: 0;
+        }
+
+        .input-group .btn {
+            flex: 0 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">{{ config.app_name }}</h1>
+        <p class="text-center mb-4">{{ config.description }}</p>
+
+        <!-- Chat Section -->
+        <div class="card chat-bot-card">
+            <h2 style="font-size:1.3rem;">🤖 Sam</h2>
+            <p style="font-size:1rem;">Ask me health-related questions!</p>
+            <div class="chat-container" id="chatContainer"></div>
+            <div class="chatbox-wrapper">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="userInput" placeholder="Type your message...">
+                    <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Breast Cancer Detection -->
+        <div class="card">
+            <h2>Breast Cancer Detection 🔬</h2>
+            <p>Upload an ultrasound image to predict whether the tumor is <strong>Benign</strong>, <strong>Malignant</strong>, or <strong>Normal</strong>.</p>
+            <div class="file-upload">
+                <input type="file" class="form-control" id="breastCancerFile" accept="image/*" onchange="handleBreastCancerUpload(event)">
+                <img id="breastCancerPreview" class="preview-image" style="display: none;">
+            </div>
+            <div id="breastCancerResult" class="prediction-result" style="display: none;"></div>
+        </div>
+
+        <!-- Skin Disease Prediction -->
+        <div class="card">
+            <h2>Skin Disease Prediction 🧴</h2>
+            <div class="file-upload">
+                <input type="file" class="form-control" id="skinDiseaseFile" accept="image/*" onchange="handleSkinDiseaseUpload(event)">
+                <img id="skinDiseasePreview" class="preview-image" style="display: none;">
+            </div>
+            <div id="skinDiseaseResult" class="prediction-result" style="display: none;"></div>
+        </div>
+
+        <!-- Diabetes Prediction -->
+        <div class="card">
+            <h2>Diabetes Prediction 🥪</h2>
+            <p>Fill out the details below to predict your risk of diabetes.</p>
+            <form id="diabetesForm" onsubmit="predictDiabetes(event)">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Pregnancies</label>
+                        <input type="number" class="form-control" name="pregnancies" min="0" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Glucose</label>
+                        <input type="number" class="form-control" name="glucose" min="0" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Blood Pressure</label>
+                        <input type="number" class="form-control" name="bloodPressure" min="0" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Skin Thickness</label>
+                        <input type="number" class="form-control" name="skinThickness" min="0" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Insulin</label>
+                        <input type="number" class="form-control" name="insulin" min="0" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">BMI</label>
+                        <input type="number" class="form-control" name="bmi" min="0" step="0.1" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Diabetes Pedigree Function</label>
+                        <input type="number" class="form-control" name="dpf" min="0" step="0.1" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Age</label>
+                        <input type="number" class="form-control" name="age" min="0" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Predict⚡️</button>
+            </form>
+            <div id="diabetesResult" class="prediction-result" style="display: none;"></div>
+        </div>
+
+        <!-- Heart Disease Prediction -->
+        <div class="card">
+            <h2>Heart Disease Prediction ❤️</h2>
+            <p>Fill out the details below to check your risk of heart disease.</p>
+            <form id="heartDiseaseForm" onsubmit="predictHeartDisease(event)">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Age</label>
+                        <input type="number" class="form-control" name="age" min="0" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Sex</label>
+                        <select class="form-select" name="sex" required>
+                            <option value="1">Male</option>
+                            <option value="0">Female</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Chest Pain Type (0-3)</label>
+                        <input type="number" class="form-control" name="cp" min="0" max="3" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Resting Blood Pressure</label>
+                        <input type="number" class="form-control" name="trestbps" min="0" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Cholesterol</label>
+                        <input type="number" class="form-control" name="chol" min="0" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Fasting Blood Sugar > 120 mg/dl</label>
+                        <select class="form-select" name="fbs" required>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Maximum Heart Rate Achieved</label>
+                        <input type="number" class="form-control" name="thalach" min="0" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Exercise Induced Angina</label>
+                        <select class="form-select" name="exang" required>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">ST Depression</label>
+                        <input type="number" class="form-control" name="oldpeak" min="0" step="0.1" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Number of Major Vessels (0-3)</label>
+                        <select class="form-select" name="ca" required>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Thalassemia</label>
+                        <select class="form-select" name="thal" required>
+                            <option value="1">Normal</option>
+                            <option value="2">Fixed Defect</option>
+                            <option value="3">Reversible Defect</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Predict⚡️</button>
+            </form>
+            <div id="heartDiseaseResult" class="prediction-result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <footer style="text-align:center; color:#aaa; margin-top:40px; padding:20px 0 10px 0; font-size:1rem;">
+        Created By Nitin Kharade | © 2025 All rights reserved.
+    </footer>
+
+    <script>
+        // Chat functionality
+        function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            // Add user message to chat
+            addMessageToChat('user', message);
+            userInput.value = '';
+
+            // Send to backend
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: message }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                addMessageToChat('bot', data.response);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                addMessageToChat('bot', 'Sorry, I encountered an error. Please try again.');
+            });
+        }
+
+        function addMessageToChat(sender, message) {
+            const chatContainer = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}-message`;
+            messageDiv.textContent = message;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Breast Cancer Detection
+        function handleBreastCancerUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const preview = document.getElementById('breastCancerPreview');
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = 'block';
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/predict/breast-cancer', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultDiv = document.getElementById('breastCancerResult');
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'prediction-result success';
+                resultDiv.innerHTML = `
+                    <h4>Prediction: ${data.prediction}</h4>
+                    <p>Confidence: ${(data.confidence * 100).toFixed(2)}%</p>
+                    <p>Probabilities:</p>
+                    <ul>
+                        <li>Benign: ${(data.probabilities.benign * 100).toFixed(2)}%</li>
+                        <li>Malignant: ${(data.probabilities.malignant * 100).toFixed(2)}%</li>
+                        <li>Normal: ${(data.probabilities.normal * 100).toFixed(2)}%</li>
+                    </ul>
+                `;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const resultDiv = document.getElementById('breastCancerResult');
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'prediction-result error';
+                resultDiv.textContent = 'Error processing the image. Please try again.';
+            });
+        }
+
+        // Skin Disease Prediction
+        function handleSkinDiseaseUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const preview = document.getElementById('skinDiseasePreview');
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = 'block';
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/predict/skin-disease', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultDiv = document.getElementById('skinDiseaseResult');
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'prediction-result success';
+                resultDiv.textContent = `Prediction: ${data.prediction}`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const resultDiv = document.getElementById('skinDiseaseResult');
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'prediction-result error';
+                resultDiv.textContent = 'Error processing the image. Please try again.';
+            });
+        }
+
+        // Diabetes Prediction
+        function predictDiabetes(event) {
+            event.preventDefault();
+            const form = event.target;
+            const features = [
+                parseInt(form.pregnancies.value),
+                parseInt(form.glucose.value),
+                parseInt(form.bloodPressure.value),
+                parseInt(form.skinThickness.value),
+                parseInt(form.insulin.value),
+                parseFloat(form.bmi.value),
+                parseFloat(form.dpf.value),
+                parseInt(form.age.value)
+            ];
+
+            fetch('/predict/diabetes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ features: features }),
+            })
+            .then(res => res.json())
+            .then(data => {
+                const resultDiv = document.getElementById('diabetesResult');
+                resultDiv.style.display = 'block';
+                if (data.prediction) {
+                    resultDiv.className = 'prediction-result success';
+                    resultDiv.textContent = data.prediction;
+                } else if (data.error) {
+                    resultDiv.className = 'prediction-result error';
+                    resultDiv.textContent = data.error;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const resultDiv = document.getElementById('diabetesResult');
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'prediction-result error';
+                resultDiv.textContent = 'Error making prediction. Please try again.';
+            });
+        }
+
+        // Heart Disease Prediction
+        function predictHeartDisease(event) {
+            event.preventDefault();
+            const form = event.target;
+            const features = [
+                parseInt(form.age.value),
+                parseInt(form.sex.value),
+                parseInt(form.cp.value),
+                parseInt(form.trestbps.value),
+                parseInt(form.chol.value),
+                parseInt(form.fbs.value),
+                parseInt(form.thalach.value),
+                parseInt(form.exang.value),
+                parseFloat(form.oldpeak.value),
+                parseInt(form.ca.value),
+                parseInt(form.thal.value)
+            ];
+
+            fetch('/predict/heart-disease', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ features: features }),
+            })
+            .then(res => res.json())
+            .then(data => {
+                const resultDiv = document.getElementById('heartDiseaseResult');
+                resultDiv.style.display = 'block';
+                if (data.prediction) {
+                    resultDiv.className = 'prediction-result success';
+                    resultDiv.textContent = data.prediction;
+                } else if (data.error) {
+                    resultDiv.className = 'prediction-result error';
+                    resultDiv.textContent = data.error;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const resultDiv = document.getElementById('heartDiseaseResult');
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'prediction-result error';
+                resultDiv.textContent = 'Error making prediction. Please try again.';
+            });
+        }
+
+        // Enter key for chat
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html> 

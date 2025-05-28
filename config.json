@@ -1,0 +1,10 @@
+{
+	"params": {
+		"app_name": "Health Prognosis ➕ ",
+		"developer": "Nitin",
+		"description": "Health Prognosis is an advanced health prediction app powered by machine learning. It offers predictive insights about various health conditions based on user data and medical images. Each model is designed to deliver accurate, personalized health recommendations, helping users take proactive steps toward better health.",
+		"about": "Health Prognosis App provides predictions and insights based on cutting-edge machine learning models:\n\n1. 🧴 **Skin Disease Prediction Model**: This model uses Convolutional Neural Networks (CNN) to analyze uploaded skin images and detect conditions like Acne, Melanoma, and Psoriasis. It classifies images based on pre-trained data and helps in early diagnosis.\n2. 🩺 **Diabetes Prediction Model**: The diabetes prediction model uses Logistic Regression and Neural Networks to predict the likelihood of diabetes based on health factors like age, BMI, blood pressure, and glucose levels. The model leverages historical medical data to identify risk factors and predict future possibilities.\n3. ❤️ **Heart Disease Prediction Model**: This model utilizes machine learning algorithms like Random Forest and XGBoost to analyze patient data, including cholesterol levels, blood pressure, and heart rate. It evaluates risk factors and predicts the likelihood of a heart attack.\n4. 🔬 **Breast Cancer Detection Model**: This model uses a combination of image processing techniques and machine learning algorithms (like CNN) to classify breast tissue in ultrasound images. It determines whether the tumor is benign, malignant, or normal, providing insights for early diagnosis.\n5. 🤖 **Health Chatbot Model**: The chatbot uses Natural Language Processing (NLP) to interact with users, answering health-related questions and providing useful advice based on a knowledge database and user queries."
+	}
+ }
+ 
+ 
