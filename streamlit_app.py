@@ -656,10 +656,16 @@ def main():
     st.markdown("Ask me health-related questions!")
     
     # Chat input
-    user_input = st.text_input("Type your message...", key="chat_input")
-    if user_input:
+    st.markdown("<style>div.stButton > button {font-size: 20px !important; padding: 10px 16px !important;}</style>", unsafe_allow_html=True)
+    col1, col2 = st.columns([4, 1])
+    with col1:
+        user_input = st.text_input("Type your message...", key="chat_input", label_visibility="collapsed")
+        with col2:
+            send = st.button("⚡️")
+    # Process chat input on button click
+    if send and user_input:
         response = get_chatbot_response(user_input)
-        st.markdown(f"<div style='background-color: #333; padding: 10px; border-radius: 8px; margin-right: 20%;'>{response}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='background-color: #333; padding: 9px; border-radius: 5px; margin-right: 10%;'>{response}</div>", unsafe_allow_html=True)
 
     # Breast Cancer Detection
     st.markdown("### Breast Cancer Detection 🔬")
