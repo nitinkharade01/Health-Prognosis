@@ -586,7 +586,7 @@ def predict_diabetes(features):
             st.error(f"Model file {DIABETES_MODEL_PATH} not found. Please upload the model to the models folder.")
             return None
         with open(DIABETES_MODEL_PATH, 'rb') as file:
-            model = pickle.load(file)
+            model = joblib.load(DIABETES_MODEL_PATH)
         prediction = model.predict([features])[0]
         return (
             "🩺 You are a diabetic person. Regular monitoring and lifestyle strategies are essential."
@@ -603,7 +603,7 @@ def predict_heart_disease(features):
             st.error(f"Model file {HEART_DISEASE_MODEL_PATH} not found. Please upload the model to the models folder.")
             return None
         with open(HEART_DISEASE_MODEL_PATH, 'rb') as file:
-            model = pickle.load(file)
+            model = joblib.load(HEART_DISEASE_MODEL_PATH))
         prediction = model.predict([features])[0]
         return (
             "💔 You have a heart problem. Seek medical advice immediately."
