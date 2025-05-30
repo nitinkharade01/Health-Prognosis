@@ -632,7 +632,7 @@ def get_chatbot_response(user_input):
 # ------------------------- Main UI -------------------------
 def main():
     # Header with centered title only
-    st.markdown("<h1 class='main-title'>Health Prognosis</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 class='main-title'>Health Prognosis - AI-Powered Health Prediction System</h1>", unsafe_allow_html=True)
     st.markdown(f"<p class='description'>{config_params['description']}</p>", unsafe_allow_html=True)
 
     # --- Add Model Info Section ---
