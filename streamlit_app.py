@@ -714,7 +714,7 @@ def main():
         dpf = st.number_input("Diabetes Pedigree Function", min_value=0.0)
         age = st.number_input("Age", min_value=0)
     
-    if st.button("Predict⚡️", key="predict_diabetes"):
+    if st.button("Predict", key="predict_diabetes"):
         features = [pregnancies, glucose, blood_pressure, skin_thickness, insulin, bmi, dpf, age]
         result = predict_diabetes(features)
         if result:
@@ -739,7 +739,7 @@ def main():
         ca = st.selectbox("Number of Major Vessels (0–3)", [0, 1, 2, 3])
         thal = st.selectbox("Thalassemia (1=Normal, 2=Fixed Defect, 3=Reversible Defect)", [1, 2, 3])
     
-    if st.button("Predict⚡️", key="predict_heart"):
+    if st.button("Predict", key="predict_heart"):
         sex_val = 1 if sex == "Male" else 0
         features = [age, sex_val, cp, trestbps, chol, fbs, thalach, exang, oldpeak, ca, thal]
         result = predict_heart_disease(features)
