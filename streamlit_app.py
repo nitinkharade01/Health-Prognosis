@@ -661,7 +661,7 @@ def main():
     with col1:
         user_input = st.text_input("Type your message...", key="chat_input", label_visibility="collapsed")
         with col2:
-            send = st.button("⬆️")
+            send = st.button("Send")
     # Process chat input on button click
     if send and user_input:
         response = get_chatbot_response(user_input)
